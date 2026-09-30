@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVEH VPN - فیلترشکن کاوه</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(180deg, #a8d8ea 0%, #cce7f0 50%, #ffffff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 15px;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5px;
+        }
+
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .header h2 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .header-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .divider-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0 20px 0;
+            width: 100%;
+        }
+
+        .divider-line::before,
+        .divider-line::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: #2c3e50;
+            border-radius: 2px;
+        }
+
+        .divider-icon {
+            margin: 0 10px;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            letter-spacing: -2px;
+        }
+
+        .packages-title {
+            text-align: right;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 20px;
+            padding-right: 15px;
+        }
+
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 30px;
+        }
+
+        .accordion-item {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .accordion-header {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .accordion-header .icon {
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .accordion-item.active .accordion-header .icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .accordion-content-inner {
+            padding: 10px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sub-item {
+            padding: 12px 15px;
+            background: white;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .sub-item:hover {
+            background: #f0f8ff;
+            border-color: #a8d8ea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .footer {
+            margin-top: auto;
+            text-align: center;
+            padding-top: 20px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 15px 10px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            width: 90%;
+            max-width: 350px;
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: popIn 0.3s ease-out;
+            position: relative;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .modal .selected-package {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .modal .support-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .support-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-telegram { background: #0088cc; }
+        .btn-whatsapp { background: #25D366; }
+        .btn-bale { background: #3b82f6; }
+        .btn-rubika { background: #8e44ad; }
+        .btn-email { background: #e74c3c; }
+
+        .support-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 380px) {
+            .header h1 { font-size: 1rem; }
+            .header h2 { font-size: 0.8rem; }
+            .header-logo { width: 40px; height: 40px; }
+            .packages-title { font-size: 1.1rem; }
+            .footer-links { gap: 5px; }
+            .footer-link { font-size: 0.8rem; }
+            .sub-item { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="header">
+            <div class="header-top">
+                <h1>KAVEH VPN</h1>
+                <img src="eagle.png" alt="لوگو" class="header-logo" onerror="this.style.display='none'">
+                <h2>فیلترشکن کاوه</h2>
+            </div>
+            <div class="divider-line">
+                <span class="divider-icon">◆</span>
+            </div>
+        </header>
+
+        <div class="packages-title">بسته ها</div>
+
+        <div class="accordion">
+            
+            <div class="accordion-item" id="eco">
+                <div class="accordion-header" onclick="toggleAccordion('eco')">
+                    <span>اقتصادی</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <div class="sub-item" onclick="openSupportModal('اقتصادی ۱ گیگ یک ماهه ۴,۵۰۰ تومان')">۱ گیگ یک ماهه ۴,۵۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('اقتصادی ۵ گیگ یک ماهه ۲۲,۵۰۰ تومان')">۵ گیگ یک ماهه ۲۲,۵۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('اقتصادی ۱۰ گیگ یک ماهه ۴۵,۰۰۰ تومان')">۱۰ گیگ یک ماهه ۴۵,۰۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('اقتصادی ۳۰ گیگ یک ماهه ۱۳۵,۰۰۰ تومان')">۳۰ گیگ یک ماهه ۱۳۵,۰۰۰ تومان</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="tunnel">
+                <div class="accordion-header" onclick="toggleAccordion('tunnel')">
+                    <span>تونل</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <div class="sub-item" onclick="openSupportModal('تونل ۱ گیگ یک ماهه ۱۵,۰۰۰ تومان')">۱ گیگ یک ماهه ۱۵,۰۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('تونل ۵ گیگ یک ماهه ۷۵,۰۰۰ تومان')">۵ گیگ یک ماهه ۷۵,۰۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('تونل ۱۰ گیگ یک ماهه ۱۵۰,۰۰۰ تومان')">۱۰ گیگ یک ماهه ۱۵۰,۰۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('تونل ۳۰ گیگ یک ماهه ۴۵۰,۰۰۰ تومان')">۳۰ گیگ یک ماهه ۴۵۰,۰۰۰ تومان</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item" id="white">
+                <div class="accordion-header" onclick="toggleAccordion('white')">
+                    <span>سفید</span>
+                    <span class="icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <div class="sub-item" onclick="openSupportModal('سفید ۱ گیگ یک ماهه ۱۶,۵۰۰ تومان')">۱ گیگ یک ماهه ۱۶,۵۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('سفید ۵ گیگ یک ماهه ۸۲,۵۰۰ تومان')">۵ گیگ یک ماهه ۸۲,۵۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('سفید ۱۰ گیگ یک ماهه ۱۶۵,۰۰۰ تومان')">۱۰ گیگ یک ماهه ۱۶۵,۰۰۰ تومان</div>
+                        <div class="sub-item" onclick="openSupportModal('سفید ۳۰ گیگ یک ماهه ۴۹۵,۰۰۰ تومان')">۳۰ گیگ یک ماهه ۴۹۵,۰۰۰ تومان</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="footer">
+            <div class="footer-title">پشتیبانی:</div>
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="openSupportModal('پشتیبانی عمومی')">
+                    <span>تلگرام</span>
+                </a>
+                <a href="#" class="footer-link" onclick="openSupportModal('پشتیبانی عمومی')">
+                    <span>واتساپ</span>
+                </a>
+                <a href="#" class="footer-link" onclick="openSupportModal('پشتیبانی عمومی')">
+                    <span>بله</span>
+                </a>
+                <a href="#" class="footer-link" onclick="openSupportModal('پشتیبانی عمومی')">
+                    <span>روبیکا</span>
+                </a>
+                <a href="#" class="footer-link" onclick="openSupportModal('پشتیبانی عمومی')">
+                    <span>ایمیل</span>
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal">
+            <span class="modal-close" onclick="closeSupportModal()">&times;</span>
+            <h3>پشتیبانی و سفارش</h3>
+            <span class="selected-package" id="modalPackageName">انتخاب نشده</span>
+            
+            <div class="support-options">
+                <a href="#" id="link-telegram" class="support-btn btn-telegram" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.85 1.18-5.24 3.47-.5.34-.95.51-1.35.5-.44-.01-1.29-.25-1.92-.46-.77-.26-1.38-.4-1.33-.84.03-.23.35-.47.96-.72 3.77-1.64 6.29-2.73 7.55-3.26 3.59-1.5 4.34-1.76 4.82-1.77.11 0 .35.03.47.13.1.09.13.21.14.33-.01.1-.01.22-.03.31z"/></svg>
+                    تلگرام
+                </a>
+                <a href="#" id="link-whatsapp" class="support-btn btn-whatsapp" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    واتساپ
+                </a>
+                <a href="#" id="link-bale" class="support-btn btn-bale" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"/></svg>
+                    بله
+                </a>
+                <a href="#" id="link-rubika" class="support-btn btn-rubika" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z"/></svg>
+                    روبیکا
+                </a>
+                <a href="#" id="link-email" class="support-btn btn-email">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    ایمیل
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const supportLinks = {
+            telegram: "https://t.me/kaveh_6632",
+            whatsapp: "https://wa.me/message/5ABD6XCLT2V5P1",
+            bale: "https://ble.ir/kaveh_6632",
+            rubika: "https://rubika.ir/kaveh_2716632",
+            email: "mailto:kaveh.work.6632@gmail.com"
+        };
+
+        function toggleAccordion(id) {
+            const item = document.getElementById(id);
+            const content = item.querySelector('.accordion-content');
+            const allItems = document.querySelectorAll('.accordion-item');
+
+            allItems.forEach(otherItem => {
+                if (otherItem.id !== id && otherItem.classList.contains('active')) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                }
+            });
+
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+                content.style.maxHeight = null;
+            } else {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        function openSupportModal(packageName) {
+            document.getElementById('modalPackageName').textContent = "بسته انتخاب شده: " + packageName;
+            
+            const message = "سلام لطفاً بسته " + packageName + " را برایم بفرستید";
+            const encodedMessage = encodeURIComponent(message);
+            
+            document.getElementById('link-telegram').href = supportLinks.telegram + "?text=" + encodedMessage;
+            document.getElementById('link-whatsapp').href = supportLinks.whatsapp + "?text=" + encodedMessage;
+            document.getElementById('link-bale').href = supportLinks.bale + "?text=" + encodedMessage;
+            document.getElementById('link-rubika').href = supportLinks.rubika + "?text=" + encodedMessage;
+            document.getElementById('link-email').href = supportLinks.email + "?subject=" + encodedMessage;
+
+            document.getElementById('supportModal').classList.add('active');
+        }
+
+        function closeSupportModal() {
+            document.getElementById('supportModal').classList.remove('active');
+        }
+
+        document.getElementById('supportModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSupportModal();
+            }
+        });
+    </script>
+</body>
+</html>
