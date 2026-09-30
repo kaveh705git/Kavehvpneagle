@@ -336,6 +336,36 @@
             .footer-link { font-size: 0.8rem; }
             .sub-item { font-size: 0.85rem; }
         }
+
+        .support-float {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0088cc, #3b82f6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+    cursor: pointer;
+    z-index: 999;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: pulse 2s infinite;
+}
+
+.support-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(0, 136, 204, 0.8); }
+    100% { box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4); }
+}
+        
     </style>
 </head>
 <body>
@@ -414,28 +444,13 @@
 
         </div>
 
-        <footer class="footer">
-    <div class="footer-title">پشتیبانی:</div>
-    <div class="footer-links">
-        <a href="https://t.me/Kaveh_6632" class="footer-link" target="_blank">
-            <span>تلگرام</span>
-        </a>
-        <a href="https://wa.me/message/5ABD6XCLT2V5P1" class="footer-link" target="_blank">
-            <span>واتساپ</span>
-        </a>
-        <a href="https://ble.ir/kaveh_6632" class="footer-link" target="_blank">
-            <span>بله</span>
-        </a>
-        <a href="https://rubika.ir/kaveh_2716632" class="footer-link" target="_blank">
-            <span>روبیکا</span>
-        </a>
-        <a href="mailto:kaveh.work.6632@gmail.com" class="footer-link">
-            <span>ایمیل</span>
-        </a>
-    </div>
-        </footer>
+        <!-- آیکون شناور پشتیبانی -->
+<div class="support-float" onclick="openSupportFloat()">
+    <svg viewBox="0 0 24 24" fill="white" width="28" height="28">
+        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+    </svg>
+</div>
 
-    </div>
 
     <div class="modal-overlay" id="supportModal">
         <div class="modal">
@@ -528,6 +543,26 @@
                 closeSupportModal();
             }
         });
+
+        function openSupportFloat() {
+    // نمایش متن پشتیبانی
+    document.getElementById('modalPackageName').textContent = "پشتیبانی کاوه";
+    
+    // متن پیام پیش فرض
+    const message = "سلام، برای مشاوره و پشتیبانی پیام می‌دم";
+    const encodedMessage = encodeURIComponent(message);
+    
+    // به‌روزرسانی لینک‌ها
+    document.getElementById('link-telegram').href = supportLinks.telegram + "?text=" + encodedMessage;
+    document.getElementById('link-whatsapp').href = supportLinks.whatsapp + "?text=" + encodedMessage;
+    document.getElementById('link-bale').href = supportLinks.bale + "?text=" + encodedMessage;
+    document.getElementById('link-rubika').href = supportLinks.rubika + "?text=" + encodedMessage;
+    document.getElementById('link-email').href = supportLinks.email + "?subject=" + encodedMessage;
+
+    // نمایش پاپ آپ
+    document.getElementById('supportModal').classList.add('active');
+        }
+        
     </script>
 </body>
 </html>
