@@ -483,20 +483,26 @@
             }
         }
 
-        function openSupportModal(packageName) {
-            document.getElementById('modalPackageName').textContent = "بسته انتخاب شده: " + packageName;
-            
-            const message = "سلام لطفاً بسته " + packageName + " را برایم بفرستید";
-            const encodedMessage = encodeURIComponent(message);
-            
-            document.getElementById('link-telegram').href = supportLinks.telegram + "?text=" + encodedMessage;
-            document.getElementById('link-whatsapp').href = supportLinks.whatsapp + "?text=" + encodedMessage;
-            document.getElementById('link-bale').href = supportLinks.bale + "?text=" + encodedMessage;
-            document.getElementById('link-rubika').href = supportLinks.rubika + "?text=" + encodedMessage;
-            document.getElementById('link-email').href = supportLinks.email + "?subject=" + encodedMessage;
+        function openSupportModal(packageName, type) {
+    document.getElementById('modalPackageName').textContent = "بسته انتخاب شده: " + packageName;
+    
+    let message;
+    if (type === 'no-message') {
+        message = packageName;
+    } else {
+        message = "سلام لطفاً بسته " + packageName + " را برایم بفرستید";
+    }
+    
+    const encodedMessage = encodeURIComponent(message);
+    
+    document.getElementById('link-telegram').href = supportLinks.telegram + "?text=" + encodedMessage;
+    document.getElementById('link-whatsapp').href = supportLinks.whatsapp + "?text=" + encodedMessage;
+    document.getElementById('link-bale').href = supportLinks.bale + "?text=" + encodedMessage;
+    document.getElementById('link-rubika').href = supportLinks.rubika + "?text=" + encodedMessage;
+    document.getElementById('link-email').href = supportLinks.email + "?subject=" + encodedMessage;
 
-            document.getElementById('supportModal').classList.add('active');
-        }
+    document.getElementById('supportModal').classList.add('active');
+}
 
         function closeSupportModal() {
             document.getElementById('supportModal').classList.remove('active');
